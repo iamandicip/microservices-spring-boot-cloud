@@ -5,6 +5,8 @@ logging:
     root: INFO
     se.magnus.microservices: DEBUG
 
+spring.data.mongodb.auto-index-creation: true
+
 ---
 spring.config.activate.on-profile: docker
 
