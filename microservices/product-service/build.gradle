@@ -43,10 +43,6 @@ dependencies {
     testImplementation 'org.testcontainers:mongodb'
 }
 
-jar {
-    enabled = false
-}
-
 tasks.named('test') {
     useJUnitPlatform()
 }
