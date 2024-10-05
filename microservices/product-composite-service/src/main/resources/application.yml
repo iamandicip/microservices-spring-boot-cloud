@@ -1,27 +1,12 @@
-server.port: 7000
-server.error.include-message: always
-app:
-  product-service:
-    host: localhost
-    port: 7001
-  recommendation-service:
-    host: localhost
-    port: 7002
-  review-service:
-    host: localhost
-    port: 7003
-
 springdoc:
+  swagger-ui.path: /openapi/swagger-ui.html
   api-docs.path: /openapi/v3/api-docs
   packagesToScan: se.magnus.microservices.composite.product
   pathsToMatch: /**
   enable-native-support: true
-  swagger-ui:
-    path: /openapi/swagger-ui.html
-    webjars:
-      prefix: /webjars
 
 api:
+
   common:
     version: 1.0.0
     title: Sample API
@@ -29,6 +14,7 @@ api:
     termsOfService: MY TERMS OF SERVICE
     license: MY LICENSE
     licenseUrl: MY LICENSE URL
+
     externalDocDesc: MY WIKI PAGE
     externalDocUrl: MY WIKI URL
     contact:
@@ -77,10 +63,25 @@ api:
 
         This means that a delete request of a non-existing product will return **200 Ok**.
 
+server.port: 7000
+server.error.include-message: always
+
+app:
+  product-service:
+    host: localhost
+    port: 7001
+  recommendation-service:
+    host: localhost
+    port: 7002
+  review-service:
+    host: localhost
+    port: 7003
+
 logging:
   level:
     root: INFO
     se.magnus: DEBUG
+
 ---
 spring.config.activate.on-profile: docker
 
