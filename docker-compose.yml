@@ -8,11 +8,8 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      rabbitmq:
+        condition: service_healthy
 
   recommendation:
     build: microservices/recommendation-service
@@ -22,11 +19,8 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      rabbitmq:
+        condition: service_healthy
 
   review:
     build: microservices/review-service
@@ -36,11 +30,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      rabbitmq:
+        condition: service_healthy
 
   product-composite:
     build: microservices/product-composite-service
@@ -51,15 +42,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
     depends_on:
-      product:
-        condition: service_healthy
-      recommendation:
-        condition: service_healthy
-      review:
-        condition: service_healthy
-      mongodb:
-        condition: service_healthy
-      mysql:
+      rabbitmq:
         condition: service_healthy
 
   mongodb:
@@ -86,6 +69,18 @@ services:
       - MYSQL_PASSWORD=pwd
     healthcheck:
       test: "/usr/bin/mysql --user=user --password=pwd --execute \"SHOW DATABASES;\""
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    mem_limit: 512m
+    ports:
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
       interval: 5s
       timeout: 2s
       retries: 60
