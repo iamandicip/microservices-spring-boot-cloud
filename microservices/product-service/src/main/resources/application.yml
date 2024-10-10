@@ -12,7 +12,7 @@ spring.cloud.stream:
   defaultBinder: rabbit
   default.contentType: application/json
   bindings.messageProcessor-in-0:
-    =: products
+    destination: products
     group: productsGroup
 
 spring.cloud.stream.bindings.messageProcessor-in-0.consumer:
