@@ -22,6 +22,10 @@ ext {
     springCloudVersion = "2023.0.3"
 }
 
+jar {
+    enabled = false
+}
+
 dependencies {
     implementation project(':api')
     implementation project(':util')
